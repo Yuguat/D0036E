@@ -11,32 +11,51 @@ def make_word_list():
             return False
 
     return word_l
-def revision(wordlist):
-
-    if len(wordlist) != 0:
-        try:
-            word=wordlist[0]
-            T.append(wordlist[wordlist.index(word[::-1])])
-            Ta.append(word)
-            wordlist.remove(word)
-            wordlist.remove(wordlist[wordlist.index(word[::-1])])
-            revision(wordlist)
-        except:
-            wordlist.remove(word)
-            revision(wordlist)
-            pass
-
-    return T,Ta
 
 
 
-T = []
-Ta = []
+def in_bisect(word_list, word):
+    if len(word_list) == 0:
+        return False
 
-list1=["atakan","yusuf","zeynepp","nakata"]
-revision(list1)
-print(T)
-print(Ta)
+    i = len(word_list) // 2
+    if word_list[i] == word:
+
+        return True
+
+    if word_list[i] > word:
+
+        return in_bisect(word_list[:i], word)
+    else:
+
+        return in_bisect(word_list[i + 1:], word)
+
+
+
+
+def reverse_pair(Wordlist):
+    if len(Wordlist) == 0:
+        return False
+    word = Wordlist[0]
+    rev_word = word[::-1]
+    if in_bisect(Wordlist, rev_word) and (word!=rev_word):
+
+        Wordlist.remove(word)
+        Wordlist.remove(rev_word)
+        print(word, rev_word)
+
+    else:
+        Wordlist.remove(word)
+
+    reverse_pair(Wordlist)
+
+Wordlist=make_word_list()
+#reverse_pair(Wordlist)
+for word in Wordlist:
+    rev_word = word[::-1]
+    if in_bisect(Wordlist, rev_word):
+        print(word ,rev_word)
+
 
 
 
