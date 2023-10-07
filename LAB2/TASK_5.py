@@ -9,6 +9,9 @@ from sklearn.preprocessing import PolynomialFeatures
 from sklearn.linear_model import LinearRegression
 import pandas as pd
 from sklearn.metrics import mean_squared_error
+from sklearn.pipeline import Pipeline
+from sklearn.metrics import mean_squared_error
+from sklearn.model_selection import train_test_split
 def reading_csv(csv_file):
     f = open(csv_file, "r")
     age=[]
@@ -91,19 +94,35 @@ lin_reg.fit(X_poly,Y)
 print("Degree 2 Estimated Model Parameters",lin_reg.intercept_,lin_reg.coef_)
 X_min=min(X)
 X_max=max(X)
-X_new=np.linspace(X_min, X_max, len(X)).reshape(len(X), 1)
-print(X_new)
+X_new=X_b
 X_new_poly = poly_features.transform(X_new)
 y_predict = lin_reg.predict(X_new_poly)
-MSE=mean_squared_error(Y,y_predict)
+MSE_T=mean_squared_error(Y,y_predict)
 plt.plot(X, Y, "b.", linewidth=2, label="Real")
 plt.plot(X_new, y_predict, "r.", linewidth=2, label="Predictions")
 plt.xlabel("$x_1$", fontsize=18)
 plt.ylabel("$y$", rotation=0, fontsize=18)
 plt.legend(loc="upper left", fontsize=14)
-plt.title(("Degree2 : MSE  "+str(MSE)), rotation=0, fontsize=18)
+plt.title(("Training Degree2 : MSE  "+str(MSE_T)), rotation=0, fontsize=18)
 plt.axis([X_min, X_max, 0, 500])
 plt.show()
+#validation Dataset
+X=Val_Data["age"].to_numpy().T
+Y=Val_Data["income"].to_numpy().T
+X_b=np.c_[X]
+X_new=X_b
+X_new_poly = poly_features.transform(X_new)
+y_predict = lin_reg.predict(X_new_poly)
+MSE_val=mean_squared_error(Y,y_predict)
+plt.plot(X, Y, "b.", linewidth=2, label="Real")
+plt.plot(X_new, y_predict, "r.", linewidth=2, label="Predictions")
+plt.xlabel("$Age$", fontsize=18)
+plt.ylabel("$Income$", rotation=0, fontsize=18)
+plt.legend(loc="upper left", fontsize=14)
+plt.title(("Validation Degree2 : MSE  "+str(MSE_val)), rotation=0, fontsize=18)
+plt.axis([X_min, X_max, 0, 500])
+plt.show()
+
 
 #Degree 3
 poly_features=PolynomialFeatures(degree=3,include_bias=False)
@@ -117,22 +136,37 @@ lin_reg.fit(X_poly,Y)
 print("Degree 3 Estimated Model Parameters",lin_reg.intercept_,lin_reg.coef_)
 X_min=min(X)
 X_max=max(X)
-X_new=np.linspace(X_min, X_max, len(X)).reshape(len(X), 1)
-print(X_new)
+X_new=X_b
 X_new_poly = poly_features.transform(X_new)
 y_predict = lin_reg.predict(X_new_poly)
-MSE=mean_squared_error(Y,y_predict)
+MSE_T=mean_squared_error(Y,y_predict)
+plt.plot(X, Y, "b.", linewidth=2, label="Real")
+plt.plot(X_new, y_predict, "r.", linewidth=2, label="Predictions")
+plt.xlabel("$x_1$", fontsize=18)
+plt.ylabel("$y$", rotation=0, fontsize=18)
+plt.legend(loc="upper left", fontsize=14)
+plt.title(("Training Degree3 : MSE  "+str(MSE_T)), rotation=0, fontsize=18)
+plt.axis([X_min, X_max, 0, 500])
+plt.show()
+#validation Dataset
+X=Val_Data["age"].to_numpy().T
+Y=Val_Data["income"].to_numpy().T
+X_b=np.c_[X]
+X_new=X_b
+X_new_poly = poly_features.transform(X_new)
+y_predict = lin_reg.predict(X_new_poly)
+MSE_val=mean_squared_error(Y,y_predict)
 plt.plot(X, Y, "b.", linewidth=2, label="Real")
 plt.plot(X_new, y_predict, "r.", linewidth=2, label="Predictions")
 plt.xlabel("$Age$", fontsize=18)
 plt.ylabel("$Income$", rotation=0, fontsize=18)
 plt.legend(loc="upper left", fontsize=14)
-plt.title(("Degree3 : MSE  "+str(MSE)), rotation=0, fontsize=18)
+plt.title(("Validation Degree3 : MSE  "+str(MSE_val)), rotation=0, fontsize=18)
 plt.axis([X_min, X_max, 0, 500])
 plt.show()
 
-#Degree 4
-poly_features=PolynomialFeatures(degree=4,include_bias=False)
+#Degree 6
+poly_features=PolynomialFeatures(degree=6,include_bias=False)
 X=T_Data["age"].to_numpy().T
 Y=T_Data["income"].to_numpy().T
 X_b=np.c_[X]
@@ -140,25 +174,40 @@ X_poly=poly_features.fit_transform(X_b)
 
 lin_reg=LinearRegression()
 lin_reg.fit(X_poly,Y)
-print("Degree 4 Estimated Model Parameters",lin_reg.intercept_,lin_reg.coef_)
+print("Degree 6 Estimated Model Parameters",lin_reg.intercept_,lin_reg.coef_)
 X_min=min(X)
 X_max=max(X)
-X_new=np.linspace(X_min, X_max, len(X)).reshape(len(X), 1)
-print(X_new)
+X_new=X_b
 X_new_poly = poly_features.transform(X_new)
 y_predict = lin_reg.predict(X_new_poly)
-MSE=mean_squared_error(Y,y_predict)
+MSE_T=mean_squared_error(Y,y_predict)
+plt.plot(X, Y, "b.", linewidth=2, label="Real")
+plt.plot(X_new, y_predict, "r.", linewidth=2, label="Predictions")
+plt.xlabel("$x_1$", fontsize=18)
+plt.ylabel("$y$", rotation=0, fontsize=18)
+plt.legend(loc="upper left", fontsize=14)
+plt.title(("Training Degree6 : MSE  "+str(MSE_T)), rotation=0, fontsize=18)
+plt.axis([X_min, X_max, 0, 500])
+plt.show()
+#validation Dataset
+X=Val_Data["age"].to_numpy().T
+Y=Val_Data["income"].to_numpy().T
+X_b=np.c_[X]
+X_new=X_b
+X_new_poly = poly_features.transform(X_new)
+y_predict = lin_reg.predict(X_new_poly)
+MSE_val=mean_squared_error(Y,y_predict)
 plt.plot(X, Y, "b.", linewidth=2, label="Real")
 plt.plot(X_new, y_predict, "r.", linewidth=2, label="Predictions")
 plt.xlabel("$Age$", fontsize=18)
 plt.ylabel("$Income$", rotation=0, fontsize=18)
 plt.legend(loc="upper left", fontsize=14)
-plt.title(("Degree4 : MSE  "+str(MSE)), rotation=0, fontsize=18)
+plt.title(("Validation Degree6 : MSE  "+str(MSE_val)), rotation=0, fontsize=18)
 plt.axis([X_min, X_max, 0, 500])
 plt.show()
 
-#Degree 5
-poly_features=PolynomialFeatures(degree=5,include_bias=False)
+#Degree 8
+poly_features=PolynomialFeatures(degree=8,include_bias=False)
 X=T_Data["age"].to_numpy().T
 Y=T_Data["income"].to_numpy().T
 X_b=np.c_[X]
@@ -166,26 +215,65 @@ X_poly=poly_features.fit_transform(X_b)
 
 lin_reg=LinearRegression()
 lin_reg.fit(X_poly,Y)
-print("Degree 5 Estimated Model Parameters",lin_reg.intercept_,lin_reg.coef_)
+print("Degree 8 Estimated Model Parameters",lin_reg.intercept_,lin_reg.coef_)
 X_min=min(X)
 X_max=max(X)
-X_new=np.linspace(X_min, X_max, len(X)).reshape(len(X), 1)
-print(X_new)
+X_new=X_b
 X_new_poly = poly_features.transform(X_new)
 y_predict = lin_reg.predict(X_new_poly)
-MSE=mean_squared_error(Y,y_predict)
+MSE_T=mean_squared_error(Y,y_predict)
+plt.plot(X, Y, "b.", linewidth=2, label="Real")
+plt.plot(X_new, y_predict, "r.", linewidth=2, label="Predictions")
+plt.xlabel("$x_1$", fontsize=18)
+plt.ylabel("$y$", rotation=0, fontsize=18)
+plt.legend(loc="upper left", fontsize=14)
+plt.title(("Training Degree8 : MSE  "+str(MSE_T)), rotation=0, fontsize=18)
+plt.axis([X_min, X_max, 0, 500])
+plt.show()
+#validation Dataset
+X=Val_Data["age"].to_numpy().T
+Y=Val_Data["income"].to_numpy().T
+X_b=np.c_[X]
+X_new=X_b
+X_new_poly = poly_features.transform(X_new)
+y_predict = lin_reg.predict(X_new_poly)
+MSE_val=mean_squared_error(Y,y_predict)
 plt.plot(X, Y, "b.", linewidth=2, label="Real")
 plt.plot(X_new, y_predict, "r.", linewidth=2, label="Predictions")
 plt.xlabel("$Age$", fontsize=18)
 plt.ylabel("$Income$", rotation=0, fontsize=18)
 plt.legend(loc="upper left", fontsize=14)
-plt.title(("Degree5 : MSE  "+str(MSE)), rotation=0, fontsize=18)
+plt.title(("Validation Degree8 : MSE  "+str(MSE_val)), rotation=0, fontsize=18)
 plt.axis([X_min, X_max, 0, 500])
 plt.show()
 
-#Degree 9
-poly_features=PolynomialFeatures(degree=9,include_bias=False)
 
+def plot_learning_curves(model, X, y):
+     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2)
+     train_errors, val_errors = [], []
+     for m in range(1, len(X_train)):
+            model.fit(X_train[:m], y_train[:m])
+            y_train_predict = model.predict(X_train[:m])
+            y_val_predict = model.predict(X_val)
+            train_errors.append(mean_squared_error(y_train[:m], y_train_predict))
+            val_errors.append(mean_squared_error(y_val, y_val_predict))
+     plt.plot(np.sqrt(train_errors), "r-+", linewidth=2, label="train")
+     plt.plot(np.sqrt(val_errors), "b-", linewidth=2, label="val")
+     plt.axis([0, 80, 0, 50])
+     plt.show()
+
+
+polynomial_regression = Pipeline([("poly_features", PolynomialFeatures(degree=8, include_bias=False)),("lin_reg", LinearRegression()),])
+X_b=np.c_[Data_Group["age"]]
+Y=Data_Group["income"]
+plot_learning_curves(polynomial_regression,X_b,Y )
+
+
+
+
+
+#Degree 15
+poly_features=PolynomialFeatures(degree=15,include_bias=False)
 X=T_Data["age"].to_numpy().T
 Y=T_Data["income"].to_numpy().T
 X_b=np.c_[X]
@@ -193,50 +281,36 @@ X_poly=poly_features.fit_transform(X_b)
 
 lin_reg=LinearRegression()
 lin_reg.fit(X_poly,Y)
-print("Degree 9 Estimated Model Parameters",lin_reg.intercept_,lin_reg.coef_)
+print("Degree 15 Estimated Model Parameters",lin_reg.intercept_,lin_reg.coef_)
 X_min=min(X)
 X_max=max(X)
-X_new=np.linspace(X_min, X_max, len(X)).reshape(len(X), 1)
-print(X_new)
+X_new=X_b
 X_new_poly = poly_features.transform(X_new)
 y_predict = lin_reg.predict(X_new_poly)
-MSE=mean_squared_error(Y,y_predict)
+MSE_T=mean_squared_error(Y,y_predict)
 plt.plot(X, Y, "b.", linewidth=2, label="Real")
 plt.plot(X_new, y_predict, "r.", linewidth=2, label="Predictions")
-plt.xlabel("$Age$", fontsize=18)
-plt.ylabel("$Income$", rotation=0, fontsize=18)
+plt.xlabel("$x_1$", fontsize=18)
+plt.ylabel("$y$", rotation=0, fontsize=18)
 plt.legend(loc="upper left", fontsize=14)
-plt.title(("Degree9 : MSE  "+str(MSE)), rotation=0, fontsize=18)
+plt.title(("Training Degree15 : MSE  "+str(MSE_T)), rotation=0, fontsize=18)
 plt.axis([X_min, X_max, 0, 500])
 plt.show()
-
-
-
-
-#Degree 10
-poly_features=PolynomialFeatures(degree=10,include_bias=False)
-
-X=T_Data["age"].to_numpy().T
-Y=T_Data["income"].to_numpy().T
+#validation Dataset
+X=Val_Data["age"].to_numpy().T
+Y=Val_Data["income"].to_numpy().T
 X_b=np.c_[X]
-X_poly=poly_features.fit_transform(X_b)
-
-lin_reg=LinearRegression()
-lin_reg.fit(X_poly,Y)
-print("Degree 10 Estimated Model Parameters",lin_reg.intercept_,lin_reg.coef_)
-X_min=min(X)
-X_max=max(X)
-X_new=np.linspace(X_min, X_max, len(X)).reshape(len(X), 1)
-print(X_new)
+X_new=X_b
 X_new_poly = poly_features.transform(X_new)
 y_predict = lin_reg.predict(X_new_poly)
-MSE=mean_squared_error(Y,y_predict)
+MSE_val=mean_squared_error(Y,y_predict)
 plt.plot(X, Y, "b.", linewidth=2, label="Real")
 plt.plot(X_new, y_predict, "r.", linewidth=2, label="Predictions")
 plt.xlabel("$Age$", fontsize=18)
 plt.ylabel("$Income$", rotation=0, fontsize=18)
 plt.legend(loc="upper left", fontsize=14)
-plt.title(("Degree10 : MSE  "+str(MSE)), rotation=0, fontsize=18)
+plt.title(("Validation Degree15 : MSE  "+str(MSE_val)), rotation=0, fontsize=18)
 plt.axis([X_min, X_max, 0, 500])
 plt.show()
+
 
